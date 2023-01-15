@@ -1,5 +1,10 @@
 # WhatsTheWeather
+## Description
+This service will provide a user to be able to look up the weather for different citys and save the cities they look up into a recently searched list. They will be able to view the current weather and the weather for the up days. 
 
+## Acknowledgement
+This serviced used the Open Weather API.
+https://openweathermap.org
 
 ## User Story
 AS A traveler
