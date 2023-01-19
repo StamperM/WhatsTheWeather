@@ -6,20 +6,28 @@ var cityLong
 var cityStorage=JSON.parse(localStorage.getItem("City")|| "[]");
 var currentWeather
 var dailyWeather
-var cityList = document.querySelector("#listOfCities";)
+var cityInput
 function poplulateCityList() {
-    cityList.each
+    var searchList = document.getElementById('#listOfCities').children;
+    if (cities != searchList)
+    cities.push(searchList);
+
+    
+// if this.includes(!cityName){
+    
+ }
+    // 5 day fetch 
     // localStorage.setItem(city, ${cityName}.val(cityStorage));
-}
+
 // capture user input for city
 // get city from local storage and (have to get which grab the mc'ds)
 // set city to local storeage(after you get you set, )
 // append to search list
-document.getElementById("#istOfCities").innerHTML = cityStorage;
-console.log(cityStorage);
+// document.getElementById("#listOfCities").innertext= cityStorage;
+// console.log(cityStorage);
 // fetch geolocation
 function getLatAndLong() {
-    var cityInput = (cityName.value);
+    cityInput = (cityName.value);
     cityStorage.push(cityInput);
     localStorage.setItem("City",JSON.stringify(cityStorage));
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
@@ -33,11 +41,15 @@ function getLatAndLong() {
             console.log(cityLat);
             console.log(cityLong)
         });
+
         getWeather();
+        console.log(cityInput);
 }
+
+
 // fetch weather
 function getWeather(){
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${cityLat}&lon=${cityLong}&exclude=minutely,hourly,alerts&appid=${weatherApiKey}`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=$-82.59&lon=29.82&appid=${weatherApiKey}`)
     .then(function(response){
         return response.json()
     })
@@ -45,6 +57,8 @@ function getWeather(){
         console.log(data);
 
     })
+    console.log(cityLat);
+    console.log(cityLong);
 }
 
 
@@ -54,4 +68,4 @@ function getWeather(){
 // using search list populate current and future. 
 // create get data function 
 
-city = cityName
+// city = cityName
