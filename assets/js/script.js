@@ -4,24 +4,18 @@ const apiKey = "d5b935342e8b14cd96e3c89d3209dc4a";
 const weatherApiKey ="283f7d6c1e685eac6be05c60305a774a";
 const fiveDayApiKey ="bb8a3d984c401bd3e0b7c5b109985c9e";
 // get city from local storage 
-var cityStorage=JSON.parse(localStorage.getItem("City")|| "[]");
+var cityStorage=JSON.parse(localStorage.getItem("City")||"[]");
 let currentWeather;
-
 const dailyIcon = document.getElementById("dailyIcon");
 const dailyTemp = document.getElementById("dailyTemp");
 const dailyHumidity = document.getElementById("dailyHumidity");
 const dailyWind = document.getElementById("dailyWind");
 
-
-
-
-
-
 const button = document.getElementById("citySearch");
-// const todayDate = document.getElementById('today')
 todayDate = document.getElementById("todayDateHTML").innerHTML=(dayjs().format("MMM D, YYYY"));
 button.addEventListener("click",getLatAndLong);
-// poplulateCityList()
+poplulateCityList()
+
 
 // }
 // is city on list? 
@@ -103,53 +97,51 @@ function getFiveDayWeather(lat,long){
 
 // set city to local storeage
 // append to search list
+
+
 function poplulateCityList() {
-    var searchList = document.getElementById('listOfCities');
+    var searchList = document.getElementById('citySelect');
+console.log(searchList);
+
+console.log(cityStorage);
     cityStorage.forEach(function(city){
    var cityEl = document.createElement("li");
+   console.log(city);
    cityEl.textContent=city;
-   console.log(cityEl.innertext);
-   searchList.append("cityEl");
+   console.log(cityEl.textContent);
+   searchList.append(cityEl);
 })
-    
-
-//     }
-
-
-// populate weather for today's date -icon,temp, humidity,wind speed
-function showCurrentWeather(data){
-   const todaysWeather = document.getElementById('currentWeatherDiv')
-    
-    {
-        // const currentWeatherEl = document.querySelector(".currentWeatherDiv");
-        
-        const fiveDayIconEL = document.createElement('li');
-        const fiveDaydailyTemp = document.createElement("li");
-        const fiveDaydailyHumity = document.createElement("li");
-        const dfiveDayailyWind= document.createElement("li");
-
-        
-        dailyIcon.classname='fiveDaydaily-img';
-        dailyTemp.classname='fiveDaydaily-info';
-        dailyHumity.className='fiveDaydaily-info';
-        dailyWind.className='fiveDaydaily-info';
-
-
-       
-        currentWeather.append("li")
-
-
-    }
 
 }
 
 
+// populate weather for today's date -icon,temp, humidity,wind speed
+// function showCurrentWeather(data){
+//    const todaysWeather = document.getElementById('currentWeatherDiv')
+    
+//     {
+//         // const currentWeatherEl = document.querySelector(".currentWeatherDiv");
+        
+//         const fiveDayIconEL = document.createElement('li');
+//         const fiveDaydailyTemp = document.createElement("li");
+//         const fiveDaydailyHumity = document.createElement("li");
+//         const dfiveDayailyWind= document.createElement("li");
+
+//         dailyIcon.classname='fiveDaydaily-img';
+//         dailyTemp.classname='fiveDaydaily-info';
+//         dailyHumity.className='fiveDaydaily-info';
+//         dailyWind.className='fiveDaydaily-info';
+       
+//         currentWeather.append("li");
+
+//     }
+
+
+
+
 // populate weather for next 5 days - icon,temp, humidity,wind speed
 
-
+// localStorage.clear()
 
 // using search list populate current and future. 
 // create get data function 
-
-// function ShowDailyWeather(data){
-//     let dailyWeatherDisplay = document.getElementById("Current
