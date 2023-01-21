@@ -56,7 +56,7 @@ function getLatAndLong() {
             console.log(cityLong);
             getWeatherCurrent(data[0].lat,data[0].lon);
             getFiveDayWeather(data[0].lat,data[0].lon);
-            // // poplulateCityList();
+            poplulateCityList();
             
         });
 
@@ -86,10 +86,7 @@ function getWeatherCurrent(lat,long){
     
 }
 
-// function getDailyIcon(){
-//     const iconEl = getElementById("dailyWeatherIcon");
-//     iconEl.innerHTML =
-// }
+
     // 5 day fetch 
 
 function getFiveDayWeather(lat,long){
@@ -106,14 +103,14 @@ function getFiveDayWeather(lat,long){
 
 // set city to local storeage
 // append to search list
-// function poplulateCityList() {
-//     var searchList = document.getElementById('listOfCities');
-//     cityStorage.forEach(function(city){
-//    var cityEl = document.createElement("li");
-//    cityEl.textContent=city;
-//    console.log(cityEl.innertext);
-//    searchList.append("cityEl");
-// })
+function poplulateCityList() {
+    var searchList = document.getElementById('listOfCities');
+    cityStorage.forEach(function(city){
+   var cityEl = document.createElement("li");
+   cityEl.textContent=city;
+   console.log(cityEl.innertext);
+   searchList.append("cityEl");
+})
     
 
 //     }
@@ -155,15 +152,4 @@ function showCurrentWeather(data){
 // create get data function 
 
 // function ShowDailyWeather(data){
-//     let dailyWeatherDisplay = document.getElementById("CurrentWeatherDiv");
-
-
-//   const todaysWeatherDisplay =`  
-// <div class="dailyWeather">
-//     <h2 class="todayDate"></h2>
-    
-//     <p class="dailyWeather">"Tempature: ${data.main.temp} "</p>
-// </div>
-// `
-// dailyWeatherDisplay.innerHTML= todaysWeatherDisplay
-// }
+//     let dailyWeatherDisplay = document.getElementById("Current
