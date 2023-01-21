@@ -4,3 +4,11 @@
     --blue: rgb(0,71,113);
 }
 
+
+#currentWeatherDiv{
+    background-color: purple;
+}
+
+li {
+   list-style: none;
+}
