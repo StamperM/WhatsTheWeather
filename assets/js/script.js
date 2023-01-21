@@ -72,7 +72,12 @@ function getWeatherCurrent(lat,long){
         return response.json()
     })
     .then(function(data){
-      dailyIcon.innerHTML= <img src="`./assets/icons/${data.weather[0].id }`"alt="">
+        console.log(data);
+
+        console.log(data.weather[0].icon);
+    //   dailyIcon.innerHTML= 
+     
+ 
       dailyTemp.textContent = `Tempature: ${data.main.temp}`;
       dailyHumidity.textContent= `Humidity: ${data.main.humidity}`;
       dailyWind.textContent = ` Wind: ${data.wind.speed}`;
@@ -81,6 +86,10 @@ function getWeatherCurrent(lat,long){
     
 }
 
+// function getDailyIcon(){
+//     const iconEl = getElementById("dailyWeatherIcon");
+//     iconEl.innerHTML =
+// }
     // 5 day fetch 
 
 function getFiveDayWeather(lat,long){
@@ -117,16 +126,16 @@ function showCurrentWeather(data){
     {
         // const currentWeatherEl = document.querySelector(".currentWeatherDiv");
         
-        const dailyIconEL = document.createElement('li');
-        const dailyTemp = document.createElement("li");
-        const dailyHumity = document.createElement("li");
-        const dailyWind= document.createElement("li");
+        const fiveDayIconEL = document.createElement('li');
+        const fiveDaydailyTemp = document.createElement("li");
+        const fiveDaydailyHumity = document.createElement("li");
+        const dfiveDayailyWind= document.createElement("li");
 
         
-        dailyIcon.classname='daily-img';
-        dailyTemp.classname='daily-info';
-        dailyHumity.className='daily-info';
-        dailyWind.className='daily-info';
+        dailyIcon.classname='fiveDaydaily-img';
+        dailyTemp.classname='fiveDaydaily-info';
+        dailyHumity.className='fiveDaydaily-info';
+        dailyWind.className='fiveDaydaily-info';
 
 
        
@@ -144,3 +153,17 @@ function showCurrentWeather(data){
 
 // using search list populate current and future. 
 // create get data function 
+
+// function ShowDailyWeather(data){
+//     let dailyWeatherDisplay = document.getElementById("CurrentWeatherDiv");
+
+
+//   const todaysWeatherDisplay =`  
+// <div class="dailyWeather">
+//     <h2 class="todayDate"></h2>
+    
+//     <p class="dailyWeather">"Tempature: ${data.main.temp} "</p>
+// </div>
+// `
+// dailyWeatherDisplay.innerHTML= todaysWeatherDisplay
+// }
