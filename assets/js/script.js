@@ -15,23 +15,17 @@ const football = {
     daily: {},
     fiveDay: {},
 }
+const citySearchbutton = document.querySelector("citySearch");
 const button = document.getElementById("citySearch");
 todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
 button.addEventListener("click", getLatAndLong);
-// poplulateCityList()
+// citySearchbutton.addEventListener("click",getLatAndLong);
+// displayCityData();
 
 
-// }
-// is city on list? 
-// if city is not on list add
-// then sort()
-
-//  document.querySelector("#citySearch").addEventListener(click,populateSearchResults); 
-//  function populateSearchResults(){
-//     getLatAndLong();
 
 
-// console.log(cityStorage);
+
 
 
 
@@ -101,39 +95,20 @@ function getFiveDayWeather(lat, long) {
             console.log(data);
             football.fiveDay = {
                 date: data.list[0].dt_txt,
-                weatherIcon: data.list[0].weather[0].icon,
+                fiveDayweatherIcon: data.list[0].weather[0].icon,
                 tempature: data.list[0].main.temp,
                 windSpeed: data.list[0].wind.speed,
                 humidity: data.list[0].main.humidity,
             }
         })
 }
-// capture user input for city
 
-// set city to local storeage
-// append to search list
-
-
-// function poplulateCityList() {
-//     var searchList = document.getElementById('citySelect');
-// console.log(searchList);
-
-// console.log(cityStorage);
-//     cityStorage.forEach(function(city){
-//    var cityEl = document.createElement("li");
-//    console.log(city);
-//    cityEl.textContent=city;
-//    console.log(cityEl.textContent);
-//    searchList.append(cityEl);
-// })
-
-// }
 function displayCityData() {
     const soccer = document.getElementById('soccer');
     let template = "<ul>"
-    weatherStorage.forEach((city) => {
+    football.forEach((city) => {
         template +=
-            ` <li>${city}</li>`
+            ` <li class="citySearch">${city}</li>`
     })
     template += `</ul>`
     console.log(soccer);
@@ -146,11 +121,9 @@ function displayCurrentWeather(){
 const containerTodaysWeather = document.getElementById("currentWeatherDiv");
 let todaysWeather = "<div>";
 containerTodaysWeather +=
-`<h2>${football.city}`
+`<h2>${football.city}</h2>`
     `<h2> ${todayDate}</h2 >`
-      `<img`
 `<div id="dailyWeatherIcon"> <img src="./assets/icons/${football.weatherIcon}.png" alt=""></div>`
-
   `<ul>`
   `<li id="dailyTemp">Tempature: ${football.dailyTemp}</li>`
   `<li id="dailyHumidity">Humidity: ${football.dailyHumidity}</li>`
@@ -160,7 +133,23 @@ containerTodaysWeather +=
 todaysWeather += `</div>`;
 }
 
+function displayFiveDay(){
+    const aCard = document.getElementById("fiveDayCards");
+let eachDay = "<div>";
+football.forEach((fiveDay)=>{
+    aCard +=
+`<h2>${football.date}</h2>`
+  `<ul>`
+    `<li><img src="./assets/icons/${football.fiveDayweatherIcon}.png"</li>`
+   ` <li>Tempature: ${football.tempature}</li>`
+   ` <li>Wind Speed: ${football.windSpeed}</li>`
+    `<li>Humidity: ${football.windSpeed}</li>`
+  `</ul>`
+})
 
+eachDay += "</div>"
+
+}
 
 // populate weather for today's date -icon,temp, humidity,wind speed
 // function showCurrentWeather(data){
@@ -193,3 +182,23 @@ todaysWeather += `</div>`;
 // using search list populate current and future. 
 // create get data function 
 
+// capture user input for city
+
+// set city to local storeage
+// append to search list
+
+
+// function poplulateCityList() {
+//     var searchList = document.getElementById('citySelect');
+// console.log(searchList);
+
+// console.log(cityStorage);
+//     cityStorage.forEach(function(city){
+//    var cityEl = document.createElement("li");
+//    console.log(city);
+//    cityEl.textContent=city;
+//    console.log(cityEl.textContent);
+//    searchList.append(cityEl);
+// })
+
+// }
