@@ -15,11 +15,11 @@ const football = {
     daily: {},
     fiveDay: [],
 }
-const citySearchbutton = document.querySelector("citySearch");
+const citySearchbutton = document.getElementsByClassName("citySearch");
 const button = document.getElementById("citySearch");
 todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
 button.addEventListener("click", getLatAndLong);
-// citySearchbutton.addEventListener("click",getLatAndLong);
+// citySearchbutton.addEventListener("click", getLatAndLong);
 displayCityData();
 
 console.log(football);
@@ -53,7 +53,7 @@ function getLatAndLong() {
             }
             console.log("football",football);
             displayCityData();
-            // displayCurrentWeather(football.daily);
+            
         });
 
 
@@ -119,7 +119,7 @@ function displayCityData() {
     let template = "<ul>"
     storedWeather.forEach((city) => {
         template +=
-            ` <li class="citySearch">${city}</li>`
+            ` <li class="citySearch"><button class="citySearch">${city}</button></li>`
     })
     template += `</ul>`
     console.log(soccer);
@@ -153,10 +153,10 @@ containerTodaysWeather.insertAdjacentHTML("beforeend", todaysWeather);
 
 function displayFiveDay(){
     console.log("fiveDar",football);
-    const aCard= document.getElementById("weatherCards");
+    const aCard= document.getElementById("fiveday");
     // console.log("a card", weatherCards);
     aCard.innerHTML="";
-let eachDay = "<div>";
+let eachDay = "<div class=colCards>"
 football.fiveDay.forEach((everyday)=>{
     eachDay +=`
 <h2>${everyday.date}</h2>

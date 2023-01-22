@@ -13,20 +13,44 @@
     flex-direction: column;
     justify-content: space-around;
 }
+.sectionOne{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 #currentWeatherDiv{
-   
+   display: flex;
     background-color: purple;
-    height: 50%;
-    width: 300px
+    height: 300px;
+    width:500px;
+    margin: 5px;
 }
 #citySearch{
-    background-color: var(--blue);
+    display: flex;
+   
 }
 .cityList{
-    background-color: blue;
+    
+   padding: 5px;
 }
 .sectionOne{
+    display: flex;
     background-color: green;
+}
+.sectionTwo{
+    display: flex;
+    background-color: black;
+}
+.rightColTwo{
+    display: flex;
+    flex-direction: row;
+}
+.rightColTwo{
+    display: flex;
+    flex-direction: column;
+}
+.colCards{
+display: flex;
 }
 li {
    list-style: none;
