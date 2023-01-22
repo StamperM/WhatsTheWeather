@@ -1,20 +1,24 @@
 const today = dayjs();
 let cityName = document.querySelector("#cityName");
 const apiKey = "d5b935342e8b14cd96e3c89d3209dc4a";
-const weatherApiKey ="283f7d6c1e685eac6be05c60305a774a";
-const fiveDayApiKey ="bb8a3d984c401bd3e0b7c5b109985c9e";
+const weatherApiKey = "283f7d6c1e685eac6be05c60305a774a";
+const fiveDayApiKey = "bb8a3d984c401bd3e0b7c5b109985c9e";
 // get city from local storage 
-var cityStorage=JSON.parse(localStorage.getItem("City")||"[]");
+var storedWeather = JSON.parse(localStorage.getItem("football"));
 let currentWeather;
 const dailyIcon = document.getElementById("dailyIcon");
 const dailyTemp = document.getElementById("dailyTemp");
 const dailyHumidity = document.getElementById("dailyHumidity");
 const dailyWind = document.getElementById("dailyWind");
-
+const football = {
+    city: {},
+    daily: {},
+    fiveDay: {},
+}
 const button = document.getElementById("citySearch");
-todayDate = document.getElementById("todayDateHTML").innerHTML=(dayjs().format("MMM D, YYYY"));
-button.addEventListener("click",getLatAndLong);
-poplulateCityList()
+todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
+button.addEventListener("click", getLatAndLong);
+// poplulateCityList()
 
 
 // }
@@ -35,63 +39,74 @@ poplulateCityList()
 // fetch geolocation
 function getLatAndLong() {
     cityInput = (cityName.value);
-    console.log(cityInput);
-    cityStorage.push(cityInput);
-    localStorage.setItem("City",JSON.stringify(cityStorage));
+
+    // console.log(cityInput);
+    // cityStorage.push(cityInput);
+
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
         .then(function (response) {
             return response.json()
         })
         .then(function (data) {
             console.log(data);
-             cityLong = data[0].lon;
-             cityLat = data[0].lat;
-            console.log(cityLat);
-            console.log(cityLong);
-            getWeatherCurrent(data[0].lat,data[0].lon);
-            getFiveDayWeather(data[0].lat,data[0].lon);
-            poplulateCityList();
-            
+            football.city = cityInput,
+                getWeatherCurrent(data[0].lat, data[0].lon);
+            getFiveDayWeather(data[0].lat, data[0].lon);
+            displayCityData();
+
+            localStorage.setItem("football", JSON.stringify(football));
+            console.log(football);
         });
 
-       
-        console.log(cityInput);
+
 }
 
 
 // fetch weather
-function getWeatherCurrent(lat,long){
+function getWeatherCurrent(lat, long) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherApiKey}&units=imperial`)
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(data){
-        console.log(data);
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (data) {
+            console.log(data);
 
-        console.log(data.weather[0].icon);
-    //   dailyIcon.innerHTML= 
-     
- 
-      dailyTemp.textContent = `Tempature: ${data.main.temp}`;
-      dailyHumidity.textContent= `Humidity: ${data.main.humidity}`;
-      dailyWind.textContent = ` Wind: ${data.wind.speed}`;
-    })
-   
-    
+            console.log(data.weather[0].icon);
+            //   dailyIcon.innerHTML= 
+            football.daily = {
+                cityNameDaily: data.name,
+                // weatherIcon:data.weather[0].icon,
+                dailyTemp: data.main.temp,
+                dailyHumidity: data.main.humidity,
+                dailyWind: data.wind.speed,
+            },
+
+                dailyTemp.textContent = `Tempature: ${data.main.temp}`;
+            dailyHumidity.textContent = `Humidity: ${data.main.humidity}`;
+            dailyWind.textContent = ` Wind: ${data.wind.speed}`;
+        })
+
+
 }
 
 
-    // 5 day fetch 
+// 5 day fetch 
 
-function getFiveDayWeather(lat,long){
+function getFiveDayWeather(lat, long) {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${fiveDayApiKey}&units=imperial`)
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(data){
-        console.log(data);
-
-    })
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (data) {
+            console.log(data);
+            football.fiveDay = {
+                date: data.list[0].dt_txt,
+                weatherIcon: data.list[0].weather[0].icon,
+                tempature: data.list[0].main.temp,
+                windSpeed: data.list[0].wind.speed,
+                humidity: data.list[0].main.humidity,
+            }
+        })
 }
 // capture user input for city
 
@@ -99,29 +114,61 @@ function getFiveDayWeather(lat,long){
 // append to search list
 
 
-function poplulateCityList() {
-    var searchList = document.getElementById('citySelect');
-console.log(searchList);
+// function poplulateCityList() {
+//     var searchList = document.getElementById('citySelect');
+// console.log(searchList);
 
-console.log(cityStorage);
-    cityStorage.forEach(function(city){
-   var cityEl = document.createElement("li");
-   console.log(city);
-   cityEl.textContent=city;
-   console.log(cityEl.textContent);
-   searchList.append(cityEl);
-})
+// console.log(cityStorage);
+//     cityStorage.forEach(function(city){
+//    var cityEl = document.createElement("li");
+//    console.log(city);
+//    cityEl.textContent=city;
+//    console.log(cityEl.textContent);
+//    searchList.append(cityEl);
+// })
 
+// }
+function displayCityData() {
+    const soccer = document.getElementById('soccer');
+    let template = "<ul>"
+    weatherStorage.forEach((city) => {
+        template +=
+            ` <li>${city}</li>`
+    })
+    template += `</ul>`
+    console.log(soccer);
+    console.log(template);
+    soccer.insertAdjacentHTML("beforeend", template);
 }
+
+
+function displayCurrentWeather(){
+const containerTodaysWeather = document.getElementById("currentWeatherDiv");
+let todaysWeather = "<div>";
+containerTodaysWeather +=
+`<h2>${football.city}`
+    `<h2> ${todayDate}</h2 >`
+      `<img`
+`<div id="dailyWeatherIcon"> <img src="./assets/icons/${football.weatherIcon}.png" alt=""></div>`
+
+  `<ul>`
+  `<li id="dailyTemp">Tempature: ${football.dailyTemp}</li>`
+  `<li id="dailyHumidity">Humidity: ${football.dailyHumidity}</li>`
+  `<li id="dailyWind">Wind Speeds: ${football.dailyWind}</li>`
+`</ul>`
+  
+todaysWeather += `</div>`;
+}
+
 
 
 // populate weather for today's date -icon,temp, humidity,wind speed
 // function showCurrentWeather(data){
 //    const todaysWeather = document.getElementById('currentWeatherDiv')
-    
+
 //     {
 //         // const currentWeatherEl = document.querySelector(".currentWeatherDiv");
-        
+
 //         const fiveDayIconEL = document.createElement('li');
 //         const fiveDaydailyTemp = document.createElement("li");
 //         const fiveDaydailyHumity = document.createElement("li");
@@ -131,7 +178,7 @@ console.log(cityStorage);
 //         dailyTemp.classname='fiveDaydaily-info';
 //         dailyHumity.className='fiveDaydaily-info';
 //         dailyWind.className='fiveDaydaily-info';
-       
+
 //         currentWeather.append("li");
 
 //     }
@@ -145,3 +192,4 @@ console.log(cityStorage);
 
 // using search list populate current and future. 
 // create get data function 
+
