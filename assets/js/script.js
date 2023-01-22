@@ -4,25 +4,25 @@ const apiKey = "d5b935342e8b14cd96e3c89d3209dc4a";
 const weatherApiKey = "283f7d6c1e685eac6be05c60305a774a";
 const fiveDayApiKey = "bb8a3d984c401bd3e0b7c5b109985c9e";
 // get city from local storage 
-var storedWeather = JSON.parse(localStorage.getItem("football"));
+var storedWeather = JSON.parse(localStorage.getItem("city"))|| [];
 let currentWeather;
 const dailyIcon = document.getElementById("dailyIcon");
 const dailyTemp = document.getElementById("dailyTemp");
 const dailyHumidity = document.getElementById("dailyHumidity");
 const dailyWind = document.getElementById("dailyWind");
-const football = {
+const football = {     
     city: {},
     daily: {},
-    fiveDay: {},
+    fiveDay: [],
 }
 const citySearchbutton = document.querySelector("citySearch");
 const button = document.getElementById("citySearch");
 todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
 button.addEventListener("click", getLatAndLong);
 // citySearchbutton.addEventListener("click",getLatAndLong);
-// displayCityData();
+displayCityData();
 
-
+console.log(football);
 
 
 
@@ -32,6 +32,7 @@ button.addEventListener("click", getLatAndLong);
 
 // fetch geolocation
 function getLatAndLong() {
+  
     cityInput = (cityName.value);
 
     // console.log(cityInput);
@@ -43,13 +44,16 @@ function getLatAndLong() {
         })
         .then(function (data) {
             console.log(data);
-            football.city = cityInput,
+            football.city = cityInput;
                 getWeatherCurrent(data[0].lat, data[0].lon);
             getFiveDayWeather(data[0].lat, data[0].lon);
+            if(storedWeather.indexOf(cityInput)=== -1){
+                storedWeather.push(cityInput);
+            localStorage.setItem("city", JSON.stringify(storedWeather));
+            }
+            console.log("football",football);
             displayCityData();
-
-            localStorage.setItem("football", JSON.stringify(football));
-            console.log(football);
+            // displayCurrentWeather(football.daily);
         });
 
 
@@ -66,18 +70,19 @@ function getWeatherCurrent(lat, long) {
             console.log(data);
 
             console.log(data.weather[0].icon);
-            //   dailyIcon.innerHTML= 
+            
             football.daily = {
                 cityNameDaily: data.name,
-                // weatherIcon:data.weather[0].icon,
+                weatherIcon:data.weather[0].icon,
                 dailyTemp: data.main.temp,
                 dailyHumidity: data.main.humidity,
                 dailyWind: data.wind.speed,
-            },
-
-                dailyTemp.textContent = `Tempature: ${data.main.temp}`;
-            dailyHumidity.textContent = `Humidity: ${data.main.humidity}`;
-            dailyWind.textContent = ` Wind: ${data.wind.speed}`;
+                
+            }
+            displayCurrentWeather();
+            //     dailyTemp.textContent = `Tempature: ${data.main.temp}`;
+            // dailyHumidity.textContent = `Humidity: ${data.main.humidity}`;
+            // dailyWind.textContent = ` Wind: ${data.wind.speed}`;
         })
 
 
@@ -92,21 +97,27 @@ function getFiveDayWeather(lat, long) {
             return response.json()
         })
         .then(function (data) {
+            football.fiveDay = [];
             console.log(data);
-            football.fiveDay = {
-                date: data.list[0].dt_txt,
-                fiveDayweatherIcon: data.list[0].weather[0].icon,
-                tempature: data.list[0].main.temp,
-                windSpeed: data.list[0].wind.speed,
-                humidity: data.list[0].main.humidity,
-            }
+            const fivedays = data.list.slice(0,5);
+            fivedays.forEach((everyday)=>{
+            football.fiveDay.push( {
+                date: everyday.dt_txt,
+                fiveDayweatherIcon: everyday.weather[0].icon,
+                tempature: everyday.main.temp,
+                windSpeed: everyday.wind.speed,
+                humidity: everyday.main.humidity,
+            })
+        })
+            displayFiveDay()
         })
 }
 
 function displayCityData() {
     const soccer = document.getElementById('soccer');
+    soccer.innerHTML='';
     let template = "<ul>"
-    football.forEach((city) => {
+    storedWeather.forEach((city) => {
         template +=
             ` <li class="citySearch">${city}</li>`
     })
@@ -118,37 +129,47 @@ function displayCityData() {
 
 
 function displayCurrentWeather(){
+    console.log('display footbal',football);
+   
 const containerTodaysWeather = document.getElementById("currentWeatherDiv");
 let todaysWeather = "<div>";
-containerTodaysWeather +=
-`<h2>${football.city}</h2>`
-    `<h2> ${todayDate}</h2 >`
-`<div id="dailyWeatherIcon"> <img src="./assets/icons/${football.weatherIcon}.png" alt=""></div>`
-  `<ul>`
-  `<li id="dailyTemp">Tempature: ${football.dailyTemp}</li>`
-  `<li id="dailyHumidity">Humidity: ${football.dailyHumidity}</li>`
-  `<li id="dailyWind">Wind Speeds: ${football.dailyWind}</li>`
-`</ul>`
+containerTodaysWeather.innerHTML ="";
+todaysWeather += `
+<h2>${football.city}</h2>
+<h2> ${todayDate}</h2 >
+<div id="dailyWeatherIcon"> <img src="./assets/icons/${football.daily.weatherIcon}.png" alt=""></div>
+  <ul>
+<li id="dailyTemp">Tempature: ${football.daily.dailyTemp}</li>
+  <li id="dailyHumidity">Humidity: ${football.daily.dailyHumidity}</li>
+  <li id="dailyWind">Wind Speeds: ${football.daily.dailyWind}</li>
+</ul>`
   
+console.log("todays Weather",todaysWeather);
+console.log("container",containerTodaysWeather);
+
 todaysWeather += `</div>`;
+containerTodaysWeather.insertAdjacentHTML("beforeend", todaysWeather);
 }
 
 function displayFiveDay(){
-    const aCard = document.getElementById("fiveDayCards");
+    console.log("fiveDar",football);
+    const aCard= document.getElementById("weatherCards");
+    // console.log("a card", weatherCards);
+    aCard.innerHTML="";
 let eachDay = "<div>";
-football.forEach((fiveDay)=>{
-    aCard +=
-`<h2>${football.date}</h2>`
-  `<ul>`
-    `<li><img src="./assets/icons/${football.fiveDayweatherIcon}.png"</li>`
-   ` <li>Tempature: ${football.tempature}</li>`
-   ` <li>Wind Speed: ${football.windSpeed}</li>`
-    `<li>Humidity: ${football.windSpeed}</li>`
-  `</ul>`
+football.fiveDay.forEach((everyday)=>{
+    eachDay +=`
+<h2>${everyday.date}</h2>
+  <ul>
+    <li><img src="./assets/icons/${everyday.fiveDayweatherIcon}.png"</li>
+   <li>Tempature: ${everyday.tempature}</li>
+   <li>Wind Speed: ${everyday.windSpeed}</li>
+    <li>Humidity: ${everyday.humidity}</li>
+  </ul>`
 })
 
 eachDay += "</div>"
-
+aCard.insertAdjacentHTML("beforeend",eachDay);
 }
 
 // populate weather for today's date -icon,temp, humidity,wind speed
