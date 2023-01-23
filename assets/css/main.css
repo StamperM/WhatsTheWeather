@@ -28,7 +28,8 @@
 #currentWeatherDiv  {
    display: flex;
     background-color: rgb(111,121,133);
-    border: solid rgb(133, 180, 238);
+    border: 8px solid rgb(133, 180, 238);
+    border-radius: 5px;
     height: 450px;
     width:600px;
     margin: 5px;
@@ -62,16 +63,24 @@
 li {
    list-style: none;
 }
-.citySearch {
+.golf {
     padding: 5px;
+    width: 150px;
+    height: 15pxx;
+    color: white;
+    border: solid rgb(133, 180, 238);
+    border-radius: 8px;
+    margin: 10px;
 }
-
+#soccer{
+    /* border: solid rgb(133, 180, 238); */
+}
 .colCards {
     display: flex;
     background-color: rgb(111,121,133);
-    border-bottom:15px solid rgb(133, 180, 238) ;
+    /* border-bottom:15px solid rgb(133, 180, 238) ;
     border-top: 15px solid rgb(133, 180, 238);
-    border-right: solid rgb(133, 180, 238);
+    border-right: solid rgb(133, 180, 238); */
    
     /* height: 400px;
     width:600px;
@@ -79,13 +88,14 @@ li {
 
 }
 .colCards ul {
-    border-right: solid rgb(133, 180, 238);
+   
    
 }
 
-h2 {
-    border-left: 16px solid rgb(133, 180, 238);
+#fiveday {
+    border: 8px solid rgb(133, 180, 238);
    padding: 5px;
+   border-radius: 5px;
 }
 .dailyH2{
     border: none;
@@ -95,4 +105,11 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+.lsideCol{
+margin: 20px;
+}
+#citySearch{
+    margin: 5px;
+    padding: 3px;
 }
