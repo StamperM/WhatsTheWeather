@@ -19,12 +19,14 @@ const citySearchbutton = document.getElementsByClassName("citySearch");
 const button = document.getElementById("citySearch");
 todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
 button.addEventListener("click", getLatAndLong);
-// citySearchbutton.addEventListener("click", getLatAndLong);
 displayCityData();
+citySearchbutton.addEventListener("click",searchfromlist);
 
-console.log(football);
 
-
+function searchfromlist(){
+    preventDefault();
+    getLatAndLong();
+}
 
 
 
@@ -47,6 +49,7 @@ function getLatAndLong() {
             football.city = cityInput;
                 getWeatherCurrent(data[0].lat, data[0].lon);
             getFiveDayWeather(data[0].lat, data[0].lon);
+            
             if(storedWeather.indexOf(cityInput)=== -1){
                 storedWeather.push(cityInput);
             localStorage.setItem("city", JSON.stringify(storedWeather));
@@ -99,7 +102,7 @@ function getFiveDayWeather(lat, long) {
         .then(function (data) {
             football.fiveDay = [];
             console.log(data);
-            const fivedays = data.list.slice(0,5);
+            const fivedays = [data.list[1],data.list[9],data.list[17],data.list[25],data.list[33]];
             fivedays.forEach((everyday)=>{
             football.fiveDay.push( {
                 date: everyday.dt_txt,
@@ -135,15 +138,18 @@ const containerTodaysWeather = document.getElementById("currentWeatherDiv");
 let todaysWeather = "<div>";
 containerTodaysWeather.innerHTML ="";
 todaysWeather += `
-<h2>${football.city}</h2>
-<h2> ${todayDate}</h2 >
+<div>
+<h2 class="dailyH2">${football.city}</h2>
+<h2 class="dailyH2"> ${todayDate}</h2 >
+</div>
+<div>
 <div id="dailyWeatherIcon"> <img src="./assets/icons/${football.daily.weatherIcon}.png" alt=""></div>
   <ul>
 <li id="dailyTemp">Tempature: ${football.daily.dailyTemp}</li>
   <li id="dailyHumidity">Humidity: ${football.daily.dailyHumidity}</li>
   <li id="dailyWind">Wind Speeds: ${football.daily.dailyWind}</li>
-</ul>`
-  
+</ul>
+  </div>`
 console.log("todays Weather",todaysWeather);
 console.log("container",containerTodaysWeather);
 
@@ -156,7 +162,7 @@ function displayFiveDay(){
     const aCard= document.getElementById("fiveday");
     // console.log("a card", weatherCards);
     aCard.innerHTML="";
-let eachDay = "<div class=colCards>"
+let eachDay = "<div class= colCards>"
 football.fiveDay.forEach((everyday)=>{
     eachDay +=`
 <h2>${everyday.date}</h2>
@@ -172,54 +178,7 @@ eachDay += "</div>"
 aCard.insertAdjacentHTML("beforeend",eachDay);
 }
 
-// populate weather for today's date -icon,temp, humidity,wind speed
-// function showCurrentWeather(data){
-//    const todaysWeather = document.getElementById('currentWeatherDiv')
-
-//     {
-//         // const currentWeatherEl = document.querySelector(".currentWeatherDiv");
-
-//         const fiveDayIconEL = document.createElement('li');
-//         const fiveDaydailyTemp = document.createElement("li");
-//         const fiveDaydailyHumity = document.createElement("li");
-//         const dfiveDayailyWind= document.createElement("li");
-
-//         dailyIcon.classname='fiveDaydaily-img';
-//         dailyTemp.classname='fiveDaydaily-info';
-//         dailyHumity.className='fiveDaydaily-info';
-//         dailyWind.className='fiveDaydaily-info';
-
-//         currentWeather.append("li");
-
-//     }
 
 
 
 
-// populate weather for next 5 days - icon,temp, humidity,wind speed
-
-// localStorage.clear()
-
-// using search list populate current and future. 
-// create get data function 
-
-// capture user input for city
-
-// set city to local storeage
-// append to search list
-
-
-// function poplulateCityList() {
-//     var searchList = document.getElementById('citySelect');
-// console.log(searchList);
-
-// console.log(cityStorage);
-//     cityStorage.forEach(function(city){
-//    var cityEl = document.createElement("li");
-//    console.log(city);
-//    cityEl.textContent=city;
-//    console.log(cityEl.textContent);
-//    searchList.append(cityEl);
-// })
-
-// }
