@@ -10,6 +10,7 @@ const dailyIcon = document.getElementById("dailyIcon");
 const dailyTemp = document.getElementById("dailyTemp");
 const dailyHumidity = document.getElementById("dailyHumidity");
 const dailyWind = document.getElementById("dailyWind");
+let cityInput ;
 let userSelectedCity;
 const football = {
     city: {},
@@ -26,19 +27,14 @@ displayCityData();
 
 // This allows user to select a previouly searched city to be searched for again by clicking the name. 
 
-document.querySelectorAll(".golf").forEach((city) => {
-    city.addEventListener("click", (event) => {
-        cityName = event.target.textContent;
-        getLatAndLong();
-    })
-}) 
+
 
 
 
 // This function kicks off the geolocation request and the data that is return is used for the current and 5 day request and those functions are called in this function. 
-function getLatAndLong() {
+function getLatAndLong(city) {
 
-    cityInput = (cityName.value);
+    
 
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
         .then(function (response) {
@@ -117,16 +113,24 @@ function getFiveDayWeather(lat, long) {
 function displayCityData() {
     const soccer = document.getElementById('soccer');
     soccer.innerHTML = '';
-    let template = "<ul>"
+    let template = "<ul class=gettingCity>"
     storedWeather.forEach((city) => {
         template +=
-            ` <li class="golf">${city}</li>`
+            ` <li class="golf" >${city}</li>`
     })
     // <button class=" buttonCity" id ="${city}></button>
     template += `</ul>`
     console.log(soccer);
     console.log(template);
     soccer.insertAdjacentHTML("beforeend", template);
+
+    document.querySelectorAll(".gettingCity").forEach((city) => {
+        city.addEventListener("click", (event) => {
+           cityInput = event.target.innerHTML;
+            getLatAndLong(cityInput);
+        })
+    }) 
+
 }
 
 // displays the current weather for the searched city
