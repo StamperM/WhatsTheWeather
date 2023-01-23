@@ -19,7 +19,7 @@ const football = {
 
 const button = document.getElementById("citySearch");
 todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
-
+// Triggers the request for geolocation 
 button.addEventListener("click", getLatAndLong);
 
 displayCityData();
@@ -35,42 +35,10 @@ document.querySelectorAll(".golf").forEach((city) => {
 
 
 
-
-function getLatAndLong(){
-fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
-    .then(function (response) {
-        return response.json()
-    })
-    .then(function (data) {
-        console.log(data);
-        football.city = cityInput;
-        getWeatherCurrent(data[0].lat, data[0].lon);
-        getFiveDayWeather(data[0].lat, data[0].lon);
-
-        if (storedWeather.indexOf(cityInput) === -1) {
-            storedWeather.push(cityInput);
-            localStorage.setItem("city", JSON.stringify(storedWeather));
-        }
-        console.log("football", football);
-        displayCityData();
-
-    });
-
-
-}
-
-
-
-
-
-
-// fetch geolocation
+// This function kicks off the geolocation request and the data that is return is used for the current and 5 day request and those functions are called in this function. 
 function getLatAndLong() {
 
     cityInput = (cityName.value);
-
-    // console.log(cityInput);
-    // cityStorage.push(cityInput);
 
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
         .then(function (response) {
@@ -115,9 +83,7 @@ function getWeatherCurrent(lat, long) {
 
             }
             displayCurrentWeather();
-            //     dailyTemp.textContent = `Tempature: ${data.main.temp}`;
-            // dailyHumidity.textContent = `Humidity: ${data.main.humidity}`;
-            // dailyWind.textContent = ` Wind: ${data.wind.speed}`;
+            
         })
 
 
@@ -147,7 +113,7 @@ function getFiveDayWeather(lat, long) {
             displayFiveDay()
         })
 }
-
+// displays the search list that you can select a previously searched city and get the weather
 function displayCityData() {
     const soccer = document.getElementById('soccer');
     soccer.innerHTML = '';
@@ -163,7 +129,7 @@ function displayCityData() {
     soccer.insertAdjacentHTML("beforeend", template);
 }
 
-
+// displays the current weather for the searched city
 function displayCurrentWeather() {
     console.log('display footbal', football);
 
@@ -189,7 +155,7 @@ function displayCurrentWeather() {
     todaysWeather += `</div>`;
     containerTodaysWeather.insertAdjacentHTML("beforeend", todaysWeather);
 }
-
+// displays the weather for 5 days of the searched city
 function displayFiveDay() {
     console.log("fiveDar", football);
     const aCard = document.getElementById("fiveday");
