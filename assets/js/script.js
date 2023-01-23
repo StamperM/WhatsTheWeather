@@ -10,7 +10,6 @@ const dailyIcon = document.getElementById("dailyIcon");
 const dailyTemp = document.getElementById("dailyTemp");
 const dailyHumidity = document.getElementById("dailyHumidity");
 const dailyWind = document.getElementById("dailyWind");
-let cityInput ;
 let userSelectedCity;
 const football = {
     city: {},
@@ -21,20 +20,21 @@ const football = {
 const button = document.getElementById("citySearch");
 todayDate = document.getElementById("todayDateHTML").innerHTML = (dayjs().format("MMM D, YYYY"));
 // Triggers the request for geolocation 
-button.addEventListener("click", getLatAndLong);
-
-displayCityData();
+button.addEventListener("click", getCitySearch);
 
 // This allows user to select a previouly searched city to be searched for again by clicking the name. 
 
-
-
+function getCitySearch(){
+       cityInput = cityName.value;
+        getLatAndLong(cityInput);
+  
+    }
 
 
 // This function kicks off the geolocation request and the data that is return is used for the current and 5 day request and those functions are called in this function. 
 function getLatAndLong(city) {
 
-    
+    // cityInput = cityName.value;
 
     fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
         .then(function (response) {
