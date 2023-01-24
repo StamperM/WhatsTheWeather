@@ -36,7 +36,7 @@ function getLatAndLong(city) {
 
     // cityInput = cityName.value;
 
-    fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=&appid=" + apiKey)
         .then(function (response) {
             return response.json()
         })
